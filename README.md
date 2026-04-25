@@ -1,8 +1,8 @@
 # QueryWeave
 
-[![Tests](https://img.shields.io/github/actions/workflow/status/AkiraThyme/query-weave/ci.yml?label=tests)](https://github.com/AkiraThyme/query-weave/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/your-org/queryweave/ci.yml?label=tests)](https://github.com/your-org/queryweave/actions)
 [![PyPI](https://img.shields.io/pypi/v/queryweave)](https://pypi.org/project/queryweave/)
-[![License](https://img.shields.io/github/license/AkiraThyme/query-weave)](LICENSE)
+[![License](https://img.shields.io/github/license/your-org/queryweave)](LICENSE)
 [![Python Versions](https://img.shields.io/pypi/pyversions/queryweave)](https://pypi.org/project/queryweave/)
 
 **Reusable Django ORM reporting toolkit for filters, groupings, aggregations, and exports.**
@@ -21,17 +21,6 @@ Django teams often repeat similar filtering, grouping, and export logic across s
 - CLI support for YAML report configs
 
 ## Installation
-### Local editable install
-```bash
-pip install -e .
-```
-
-### From GitHub
-```bash
-pip install git+https://github.com/AkiraThyme/query-weave.git
-```
-
-### From PyPI (after publishing)
 ```bash
 pip install queryweave
 ```
@@ -72,25 +61,6 @@ class RecentDaysFilter(BaseFilter):
 
 ## Custom exporter example
 Subclass `queryweave.exporters.base.BaseExporter` and implement `export(data) -> str`.
-
-## Build and publish
-```bash
-./scripts/build.sh
-./scripts/publish-test.sh
-./scripts/publish.sh
-```
-
-## Versioning and releases
-QueryWeave follows semantic versioning: `MAJOR.MINOR.PATCH`.
-
-Before publishing:
-1. Bump `version` in `pyproject.toml`.
-2. Rebuild distributions: `./scripts/build.sh`.
-3. Verify package metadata: `python -m twine check dist/*`.
-4. Publish to TestPyPI first: `./scripts/publish-test.sh`.
-5. Publish to PyPI: `./scripts/publish.sh`.
-
-You can also publish from GitHub Actions by pushing a version tag, e.g. `v0.1.1`, after configuring `PYPI_API_TOKEN` repository secret.
 
 ## Development
 ```bash

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -39,15 +39,13 @@ dev = [
   "mypy>=1.10",
   "django-stubs>=5.0",
   "types-PyYAML>=6.0.12",
-  "build>=1.2",
-  "twine>=5.1",
 ]
 
 [project.urls]
-Homepage = "https://github.com/AkiraThyme/query-weave"
-Documentation = "https://github.com/AkiraThyme/query-weave/tree/main/docs"
-Repository = "https://github.com/AkiraThyme/query-weave"
-Issues = "https://github.com/AkiraThyme/query-weave/issues"
+Homepage = "https://github.com/your-org/queryweave"
+Documentation = "https://github.com/your-org/queryweave/tree/main/docs"
+Repository = "https://github.com/your-org/queryweave"
+Issues = "https://github.com/your-org/queryweave/issues"
 
 [project.scripts]
 queryweave = "queryweave.cli:main"
