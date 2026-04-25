@@ -80,3 +80,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 MIT. See [LICENSE](LICENSE).
+
+## GitHub Pages deployment (docs-site)
+1. Go to repository **Settings → Pages**.
+2. Under **Build and deployment**, select **Deploy from branch**.
+3. Choose branch **main** and folder **/docs-site**.
+4. Click **Save**.
+
+The static website source is located at `docs-site/index.html` and deploys without a build step.
