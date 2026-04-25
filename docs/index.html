@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="QueryWeave is a reusable Django ORM reporting toolkit for filters, grouping, aggregations, and CSV/JSON exports."
+    />
+    <title>QueryWeave — Reusable Django ORM reporting toolkit</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="page-bg"></div>
+
+    <header class="site-header">
+      <nav class="container nav-row">
+        <a href="#top" class="brand">QueryWeave</a>
+        <div class="nav-actions">
+          <a href="#quickstart" class="link">Quickstart</a>
+          <a href="https://github.com/AkiraThyme/query-weave" target="_blank" rel="noreferrer" class="button button-ghost">GitHub</a>
+          <button id="theme-toggle" type="button" class="button button-ghost" aria-label="Toggle theme">Toggle theme</button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="container hero">
+        <p class="pill">Open-source Django reporting toolkit</p>
+        <h1>QueryWeave</h1>
+        <p class="tagline">Reusable Django ORM reporting toolkit.</p>
+        <p class="subtitle">Build reports from QuerySets with composable filters, grouping, aggregations, and one-step CSV/JSON exports—without rewriting query logic in every app.</p>
+        <div class="hero-actions">
+          <a href="#installation" class="button button-primary">Get Started</a>
+          <a href="https://github.com/AkiraThyme/query-weave" target="_blank" rel="noreferrer" class="button button-ghost">View on GitHub</a>
+          <a href="#installation" class="button button-soft">Install: <code>pip install queryweave</code></a>
+        </div>
+      </section>
+
+      <section class="container split-grid">
+        <article class="card">
+          <h2>The problem</h2>
+          <p>Django developers repeatedly write and maintain complex ORM query logic for reporting use cases.</p>
+          <ul>
+            <li>Filters and lookup logic get duplicated across endpoints and services.</li>
+            <li>Grouping and aggregations are difficult to keep consistent.</li>
+            <li>CSV/JSON exports are often bolted on and hard to test.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>The solution</h2>
+          <p>QueryWeave wraps QuerySets in reusable report configurations so your data workflows are declarative and predictable.</p>
+          <ul>
+            <li>Define filters, grouping, and aggregations in one place.</li>
+            <li>Reuse report definitions across views, jobs, and APIs.</li>
+            <li>Export report output as CSV or JSON with minimal code.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="container section-block">
+        <h2>Features</h2>
+        <div class="feature-grid">
+          <div class="feature-card">QuerySet-based reports</div>
+          <div class="feature-card">Filters (Django lookups)</div>
+          <div class="feature-card">Grouping</div>
+          <div class="feature-card">Aggregations (sum, count, avg)</div>
+          <div class="feature-card">CSV export</div>
+          <div class="feature-card">JSON export</div>
+          <div class="feature-card">Debug/slow query logging</div>
+          <div class="feature-card">Extensible filters/exporters</div>
+        </div>
+      </section>
+
+      <section id="installation" class="container section-block">
+        <h2>Installation</h2>
+        <div class="code-grid">
+          <pre class="code-block"><code>pip install queryweave</code></pre>
+          <pre class="code-block"><code>pip install git+https://github.com/AkiraThyme/query-weave.git</code></pre>
+        </div>
+      </section>
+
+      <section id="quickstart" class="container section-block">
+        <h2>Quickstart</h2>
+        <pre class="code-block"><code>from queryweave import Report
+from shop.models import Order
+
+report = Report(
+    queryset=Order.objects.all(),
+    filters={"status": "completed"},
+    group_by=["category"],
+    aggregates={
+        "total_sales": "sum(price)",
+        "order_count": "count(id)"
+    },
+    order_by=["-total_sales"]
+)
+
+data = report.run()</code></pre>
+      </section>
+
+      <section class="container section-block">
+        <h2>How it works</h2>
+        <ol class="steps-grid">
+          <li class="step-card"><span>1</span>Pass a Django QuerySet</li>
+          <li class="step-card"><span>2</span>Define filters, grouping, and aggregations</li>
+          <li class="step-card"><span>3</span>Run the report</li>
+          <li class="step-card"><span>4</span>Export results to CSV or JSON</li>
+        </ol>
+      </section>
+
+      <section class="container section-block">
+        <h2>Example output</h2>
+        <pre class="code-block"><code>[
+  {"category": "Food", "total_sales": 1200, "order_count": 32},
+  {"category": "Books", "total_sales": 850, "order_count": 18}
+]</code></pre>
+      </section>
+
+      <section class="container section-block">
+        <h2>Use cases</h2>
+        <div class="use-grid">
+          <div class="feature-card">Admin dashboards</div>
+          <div class="feature-card">Sales reports</div>
+          <div class="feature-card">Data exports</div>
+          <div class="feature-card">Analytics endpoints</div>
+          <div class="feature-card">Internal business tools</div>
+        </div>
+      </section>
+
+      <section class="container section-block">
+        <h2>Open source</h2>
+        <div class="split-grid">
+          <article class="card">
+            <h3>MIT licensed</h3>
+            <p>QueryWeave is open-source and permissively licensed for commercial and personal use.</p>
+          </article>
+          <article class="card">
+            <h3>Contributions welcome</h3>
+            <p>Help shape the project via issues and pull requests.</p>
+            <div class="hero-actions compact">
+              <a href="https://github.com/AkiraThyme/query-weave/issues" target="_blank" rel="noreferrer" class="button button-ghost">GitHub Issues</a>
+              <span class="button button-soft static">Roadmap: Coming soon</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <div class="footer-links">
+          <a href="https://github.com/AkiraThyme/query-weave" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://pypi.org/project/queryweave/" target="_blank" rel="noreferrer">PyPI</a>
+          <a href="https://github.com/AkiraThyme/query-weave/tree/main/docs" target="_blank" rel="noreferrer">Documentation</a>
+        </div>
+        <p>Made by Jerold Arranzado</p>
+      </div>
+    </footer>
+  </body>
+</html>
