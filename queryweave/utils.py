@@ -3,7 +3,9 @@
 import re
 from typing import Final
 
-AGGREGATION_PATTERN: Final[re.Pattern[str]] = re.compile(r"^(?P<fn>[a-zA-Z_][a-zA-Z0-9_]*)\((?P<field>[a-zA-Z_][a-zA-Z0-9_]*)\)$")
+AGGREGATION_PATTERN: Final[re.Pattern[str]] = re.compile(
+    r"^(?P<fn>[a-zA-Z_][a-zA-Z0-9_]*)\((?P<field>[a-zA-Z_][a-zA-Z0-9_]*)\)$"
+)
 
 
 def redact_sql(sql: str) -> str:

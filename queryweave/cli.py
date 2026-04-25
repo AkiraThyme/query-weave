@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from queryweave import Report
 from queryweave.exporters.csv import CSVExporter
@@ -18,7 +18,8 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     except ImportError as exc:  # pragma: no cover
         raise RuntimeError("PyYAML is required for CLI usage: pip install queryweave[cli]") from exc
 
-    return yaml.safe_load(path.read_text())
+    loaded = yaml.safe_load(path.read_text())
+    return cast(dict[str, Any], loaded)
 
 
 def _resolve_queryset(path: str) -> Any:

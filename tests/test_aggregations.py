@@ -1,4 +1,5 @@
 import pytest
+from django.db.models import Sum
 
 from queryweave import Report
 from queryweave.exceptions import InvalidAggregationError
@@ -26,7 +27,7 @@ def test_custom_aggregation(order_data):
     report = Report(
         queryset=order_data,
         aggregates={"total": "totalsum(price)"},
-        custom_aggregations={"totalsum": lambda field: __import__("django.db.models").db.models.Sum(field)},
+        custom_aggregations={"totalsum": lambda field: Sum(field)},
     )
     data = report.run()
     assert data["total"] == 205

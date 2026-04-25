@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
 
 from django.db.models import Avg, Count, Max, Min, Sum
 from django.db.models.aggregates import Aggregate
@@ -25,7 +24,9 @@ DEFAULT_AGGREGATIONS: dict[str, AggregateFactory] = {
 class AggregationRegistry:
     """Registry for builtin + custom aggregation factories."""
 
-    factories: dict[str, AggregateFactory] = field(default_factory=lambda: dict(DEFAULT_AGGREGATIONS))
+    factories: dict[str, AggregateFactory] = field(
+        default_factory=lambda: dict(DEFAULT_AGGREGATIONS)
+    )
 
     def register(self, name: str, factory: AggregateFactory) -> None:
         self.factories[name.lower()] = factory
