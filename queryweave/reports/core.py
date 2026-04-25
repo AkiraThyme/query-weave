@@ -93,7 +93,8 @@ class Report:
         has_rel = bool(queryset.model._meta.fields_map)
         if has_rel and not queryset.query.select_related:
             logger.info(
-                "[QueryWeave] Potential N+1 risk detected. Consider select_related/prefetch_related."
+                "[QueryWeave] Potential N+1 risk detected. "
+                "Consider select_related/prefetch_related."
             )
 
     def _log_if_slow(self, threshold_ms: int, elapsed_ms: float) -> None:

@@ -10,7 +10,7 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
 authors = [
-  { name = "QueryWeave Contributors", email = "maintainers@example.com" }
+  { name = "Jerold Arranzado", email = "jerold.arranzado30@gmail.com" }
 ]
 keywords = ["django", "orm", "reporting", "analytics", "exports"]
 classifiers = [
@@ -42,13 +42,16 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-org/queryweave"
-Documentation = "https://github.com/your-org/queryweave/tree/main/docs"
-Repository = "https://github.com/your-org/queryweave"
-Issues = "https://github.com/your-org/queryweave/issues"
+Homepage = "https://github.com/AkiraThyme/query-weave"
+Documentation = "https://github.com/AkiraThyme/query-weave/tree/main/docs"
+Repository = "https://github.com/AkiraThyme/query-weave"
+Issues = "https://github.com/AkiraThyme/query-weave/issues"
 
 [project.scripts]
 queryweave = "queryweave.cli:main"
+
+[tool.setuptools]
+include-package-data = true
 
 [tool.setuptools.packages.find]
 include = ["queryweave*"]
@@ -67,7 +70,8 @@ select = ["E", "F", "I", "B", "UP"]
 [tool.mypy]
 python_version = "3.10"
 strict = true
-plugins = ["mypy_django_plugin.main"]
+ignore_missing_imports = true
 
-[tool.django-stubs]
-django_settings_module = "tests.settings"
+[[tool.mypy.overrides]]
+module = ["django", "django.*", "yaml"]
+ignore_missing_imports = true

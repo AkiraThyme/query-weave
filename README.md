@@ -22,6 +22,8 @@ Django teams often repeat similar filtering, grouping, and export logic across s
 
 ## Installation
 ```bash
+pip install -e .
+pip install git+https://github.com/AkiraThyme/query-weave.git
 pip install queryweave
 ```
 

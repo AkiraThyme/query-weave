@@ -50,7 +50,5 @@ class FilterEngine:
 
         if lookup == "in" and not isinstance(value, (list, tuple, set)):
             raise InvalidFilterError(f"Filter '{key}' expects a sequence for '__in' lookup")
-        if lookup == "range" and (
-            not isinstance(value, (list, tuple)) or len(value) != 2
-        ):
+        if lookup == "range" and (not isinstance(value, (list, tuple)) or len(value) != 2):
             raise InvalidFilterError(f"Filter '{key}' expects two values for '__range' lookup")
