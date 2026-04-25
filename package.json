@@ -1,0 +1,11 @@
+{
+  "name": "queryweave-docs-site",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./input.css -o ./docs/assets/styles.css --minify",
+    "dev:css": "tailwindcss -i ./input.css -o ./docs/assets/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

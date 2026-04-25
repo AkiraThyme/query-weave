@@ -80,3 +80,19 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 MIT. See [LICENSE](LICENSE).
+
+## GitHub Pages deployment (docs)
+1. Go to repository **Settings → Pages**.
+2. Under **Build and deployment**, select **Deploy from branch**.
+3. Choose branch **main** and folder **/docs**.
+4. Click **Save**.
+
+The static website source is located at `docs/index.html` and deploys without a build step once CSS is built.
+
+### Build docs CSS locally
+```bash
+npm install
+npm run build:css
+```
+
+This compiles Tailwind from `input.css` into `docs/assets/styles.css` for GitHub Pages.
