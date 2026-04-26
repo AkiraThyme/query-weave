@@ -82,3 +82,59 @@ def test_related_filter_executes_single_query(order_data):
             filters={"product__category__icontains": "book"},
         ).run()
     assert len(queries) == 1
+
+
+@pytest.mark.django_db
+def test_query_guardrail_caps_basic_report_queries(order_data, assert_max_queries):
+    assert_max_queries(1, lambda: Report(queryset=order_data).run())
+
+
+@pytest.mark.django_db
+def test_query_guardrail_caps_grouped_report_queries(order_data, assert_max_queries):
+    assert_max_queries(
+        1,
+        lambda: Report(
+            queryset=order_data,
+            group_by=["product__category"],
+            aggregates={"total_sales": "sum(price)", "order_count": "count(id)"},
+            order_by=["-total_sales"],
+        ).run(),
+    )
+
+
+@pytest.mark.django_db
+def test_n_plus_one_baseline_for_related_access_without_select_related(order_data):
+    with CaptureQueriesContext(connection) as queries:
+        rows = Report(queryset=order_data).run()
+        for row in rows:
+            Order.objects.get(pk=row["id"]).product.name
+    assert len(queries) > 1
+
+
+@pytest.mark.django_db
+def test_n_plus_one_guardrail_with_select_related(order_data, assert_max_queries):
+    queryset = order_data.select_related("product")
+
+    def _run_and_access_related():
+        for order in queryset:
+            order.product.name
+
+    assert_max_queries(1, _run_and_access_related)
+
+
+@pytest.mark.django_db
+def test_debug_logs_n_plus_one_warning_without_related_optimizations(order_data, caplog):
+    caplog.set_level(logging.INFO, logger="queryweave")
+
+    Report(queryset=order_data, debug=True).run()
+
+    assert any("Potential N+1 risk detected" in rec.message for rec in caplog.records)
+
+
+@pytest.mark.django_db
+def test_debug_skips_n_plus_one_warning_when_select_related(order_data, caplog):
+    caplog.set_level(logging.INFO, logger="queryweave")
+
+    Report(queryset=order_data.select_related("product"), debug=True).run()
+
+    assert not any("Potential N+1 risk detected" in rec.message for rec in caplog.records)

@@ -92,8 +92,14 @@ class Report:
         redacted = redact_sql(str(queryset.query))
         logger.info("[QueryWeave] SQL=%s", redacted)
         logger.info("[QueryWeave] Execution time=%.2fms", elapsed_ms)
-        has_rel = bool(queryset.model._meta.fields_map)
-        if has_rel and not queryset.query.select_related:
+        has_rel = any(
+            field.is_relation and not field.auto_created
+            for field in queryset.model._meta.fields
+        )
+        has_related_optimization = bool(queryset.query.select_related) or bool(
+            queryset._prefetch_related_lookups
+        )
+        if has_rel and not has_related_optimization:
             logger.info(
                 "[QueryWeave] Potential N+1 risk detected. "
                 "Consider select_related/prefetch_related."
