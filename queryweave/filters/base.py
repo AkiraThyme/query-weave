@@ -73,7 +73,9 @@ class FilterEngine:
 
             related_model = getattr(field, "related_model", None)
             if related_model is None:
-                raise InvalidFilterError(f"Field '{field_name}' in filter path is not a relation")
+                raise InvalidFilterError(
+                    f"Field '{field_name}' in filter path is not a relation"
+                )
             current_model = related_model
 
     def _is_valid_field_path(self, model: type[Model], path: list[str]) -> bool:
