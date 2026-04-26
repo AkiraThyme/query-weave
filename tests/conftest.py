@@ -4,7 +4,9 @@ from datetime import date
 import django
 import pytest
 from django.core.management import call_command
+from django.db import connection
 from django.test.utils import (
+    CaptureQueriesContext,
     setup_databases,
     setup_test_environment,
     teardown_databases,
@@ -64,3 +66,17 @@ def order_data(db):
         created_at=date(2026, 2, 1),
     )
     return Order.objects.all()
+
+
+@pytest.fixture
+def assert_max_queries():
+    def _assert(max_queries, func, *args, **kwargs):
+        with CaptureQueriesContext(connection) as queries:
+            result = func(*args, **kwargs)
+        executed = len(queries)
+        assert executed <= max_queries, (
+            f"Expected <= {max_queries} query(ies), but executed {executed}."
+        )
+        return result
+
+    return _assert
