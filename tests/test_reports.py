@@ -38,6 +38,12 @@ def test_invalid_report_config():
     with pytest.raises(InvalidReportConfigError):
         Report(queryset=Order.objects, page=0).run()  # type: ignore[arg-type]
 
+    with pytest.raises(InvalidReportConfigError):
+        Report(queryset=Order.objects.all(), page=1).run()
+
+    with pytest.raises(InvalidReportConfigError):
+        Report(queryset=Order.objects.all(), page_size=10).run()
+
 
 @pytest.mark.django_db
 def test_debug_mode_logs(order_data, caplog):

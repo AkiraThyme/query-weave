@@ -22,6 +22,10 @@ class CSVExporter(BaseExporter):
         if not rows:
             return ""
 
+        for row in rows:
+            if not isinstance(row, dict):
+                raise ValueError("CSV export expects a dict or an iterable of dict rows")
+
         header_keys: list[str] = []
         for row in rows:
             for key in row.keys():
