@@ -9,3 +9,6 @@ publish:
 
 publish-test:
 	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+ci-local:
+	./scripts/ci-local.sh

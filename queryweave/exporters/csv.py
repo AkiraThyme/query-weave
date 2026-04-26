@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import io
+from collections.abc import Mapping
 from typing import Any
 
 from queryweave.exporters.base import BaseExporter
@@ -13,14 +14,18 @@ class CSVExporter(BaseExporter):
     """Export report payloads to CSV."""
 
     def export(self, data: Any) -> str:
-        rows: list[dict[str, Any]]
-        if isinstance(data, dict):
+        rows: list[Mapping[str, Any]]
+        if isinstance(data, Mapping):
             rows = [data]
         else:
             rows = list(data or [])
 
         if not rows:
             return ""
+
+        for row in rows:
+            if not isinstance(row, Mapping):
+                raise ValueError("CSV export expects a mapping or an iterable of mapping rows")
 
         header_keys: list[str] = []
         for row in rows:

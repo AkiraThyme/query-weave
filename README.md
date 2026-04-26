@@ -73,6 +73,7 @@ pytest
 ruff check .
 black --check .
 mypy queryweave
+./scripts/ci-local.sh  # run the same sequence as GitHub CI
 ```
 
 ## Contributing
