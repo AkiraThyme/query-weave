@@ -85,6 +85,8 @@ class Report:
             raise InvalidReportConfigError("'page' must be >= 1")
         if self.page_size is not None and self.page_size < 1:
             raise InvalidReportConfigError("'page_size' must be >= 1")
+        if (self.page is None) ^ (self.page_size is None):
+            raise InvalidReportConfigError("'page' and 'page_size' must be provided together")
 
     def _log_debug(self, queryset: QuerySet[Any], elapsed_ms: float) -> None:
         redacted = redact_sql(str(queryset.query))

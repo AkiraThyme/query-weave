@@ -26,3 +26,8 @@ def test_json_export(order_data):
 def test_empty_exporters():
     assert CSVExporter().export([]) == ""
     assert JSONExporter().export([]) == "[]"
+
+
+def test_csv_export_rejects_non_dict_rows():
+    with pytest.raises(ValueError):
+        CSVExporter().export(["not-a-dict"])
