@@ -35,3 +35,25 @@ def test_custom_filter(order_data):
     )
     rows = report.run()
     assert len(rows) == 2
+
+
+@pytest.mark.django_db
+def test_related_field_filter_lookup(order_data):
+    report = Report(
+        queryset=order_data,
+        filters={"product__category__icontains": "book"},
+    )
+    rows = report.run()
+    assert len(rows) == 2
+
+
+@pytest.mark.django_db
+def test_invalid_related_lookup(order_data):
+    with pytest.raises(InvalidFilterError, match="Unsupported lookup 'startswith'"):
+        Report(queryset=order_data, filters={"product__category__startswith": "B"}).run()
+
+
+@pytest.mark.django_db
+def test_invalid_relation_hop(order_data):
+    with pytest.raises(InvalidFilterError, match="Unsupported lookup 'name'"):
+        Report(queryset=order_data, filters={"status__name": "completed"}).run()
